@@ -1,0 +1,23 @@
+{
+  "name": "flip_ecommerce",
+  "version": "1.0.0",
+  "description": "This BE of ecommerce flipkart clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecommerce",
+    "mern",
+    "project",
+    "backend",
+    "api"
+  ],
+  "author": "giomowoka",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mongoose": "^6.2.9"
+  }
+}
