@@ -53,6 +53,10 @@ userSchema.virtual('password').set(function (password) {
   this.hash_Password = bycrypt.hashSync(password, 10);
 });
 
+userSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
+
 userSchema.methods = {
   authenticate: function (password) {
     return bycrypt.compareSync(password, this.hash_Password);
