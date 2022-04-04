@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
     if (user)
@@ -21,6 +22,7 @@ exports.signup = (req, res) => {
       if (error)
         return res.status(400).json({
           message: 'Something went wrong',
+          error,
         });
 
       if (data)
