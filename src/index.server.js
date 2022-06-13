@@ -2,12 +2,14 @@ const express = require('express');
 const env = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
 
 //
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin/auth');
+const categoryRoutes = require('./routes/category')
 
 env.config();
 
@@ -20,10 +22,13 @@ mongoose
     console.log('Database connected');
   });
 
+  
 app.use(bodyParser());
+app.use(cors());
 
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
+app.use('/api', categoryRoutes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
