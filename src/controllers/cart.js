@@ -16,54 +16,38 @@ exports.addItemToCart = (req, res) => {
             const product = req.body.cartItems.product;
             const item = cart.cartItems.find(c => c.product == product);
 
-            if(item){
+            let condition, action;
 
-                Cart.findOneAndUpdate({
-                    user: req.user._id, "cartItems.product":product
-                },
-                {
+            if(item){
+                condition = { user: req.user._id, "cartItems.product":product };
+                action = {
                     "$set": {
-                        "cartItems": {
+                        "cartItems.$": {
                             ...req.body.cartItems,
                             quantity: item.quantity + req.body.cartItems.quantity
                         }
                     }
-                }).exec((error, cart) => {
-                    if(error) return res.status(400).json({
-                        status: false,
-                        message: error
-                    })
-    
-                    if(cart) return res.status(200).json({
-                        status: true,
-                        message: 'update cart successs',
-                        data: cart
-                    })
-                })
-
+                }
             }else{
-
-                Cart.findOneAndUpdate({
-                    user: req.user._id,
-                },
-                {
+                condition = { user: req.user._id}
+                action =  {
                     "$push": {
                         "cartItems": req.body.cartItems
                     }
-                }).exec((error, cart) => {
-                    if(error) return res.status(400).json({
-                        status: false,
-                        message: error
-                    })
-    
-                    if(cart) return res.status(200).json({
-                        status: true,
-                        message: 'update cart successs',
-                        data: cart
-                    })
+                }
+            }
+            Cart.findOneAndUpdate(condition, action).exec((error, cart) => {
+                if(error) return res.status(400).json({
+                    status: false,
+                    message: error
                 })
 
-            }
+                if(cart) return res.status(200).json({
+                    status: true,
+                    message: 'update cart successs',
+                    data: cart
+                })
+            })
         }else{
             // if cart not exists then create new cart
             const cart = new Cart({

@@ -3,7 +3,7 @@ const env = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const path = require('path')
 const app = express();
 
 //
@@ -27,7 +27,7 @@ mongoose
   
 app.use(bodyParser());
 app.use(cors());
-
+app.use('/public', express.static(path.join(path.dirname(__dirname), 'uploads')));
 app.use('/api', authRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
