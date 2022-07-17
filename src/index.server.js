@@ -16,12 +16,16 @@ const cartRoutes =require('./routes/cart');
 env.config();
 
 // monggo connection
+const monggoURL = 'mongosh "mongodb+srv://cluster-flip-db.jpxih.mongodb.net/myFirstDatabase" --apiVersion 1 --username mowoka'
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER_DB}:${process.env.MONGO_PASSWORD_DB}@cluster-flip-db.jpxih.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log('Database connected');
+  }).catch((err) => {
+    console.log('err monggo connection')
+    console.log(err)
   });
 
   
